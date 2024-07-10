@@ -1,0 +1,27 @@
+{{#with product}}
+{{#if (eq targetTemplate 'SHIRT12')}}
+	{{#collector}}
+	  {{#each attributes}}
+	    {{#eq @key 3211477}}
+	      {{#each values}}
+{{#if (contains . ' Collar')}}
+{{collector-add-unique (replace . ' Collar' '')}}
+{{/if}}
+	    {{/each}}
+	    {{/eq}}
+	  {{/each}}
+	{{/collector}}
+	{{#if (collector-get)}}
+	  ,"collar_style": {
+	  "language_tag::{{locale}}": [
+	  {{#each (top 2 (collector-get))}}
+	    {
+	    "value": "{{.}}"
+	    }{{#unless @last}},{{/unless}}
+	  {{/each}}
+	  ]
+	  }
+	{{/if}}
+
+{{/if}}
+{{/with}}
